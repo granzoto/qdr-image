@@ -1,0 +1,2 @@
+export QPID_JMS_TRANSACTION_ROUTER_URL='amqp://127.0.0.1:5672'
+mvn test
