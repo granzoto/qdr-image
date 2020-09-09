@@ -16,3 +16,8 @@
 
 /.project
 /.settings/
+
+# Test
+
+/**/.idea/
+/**/target/
