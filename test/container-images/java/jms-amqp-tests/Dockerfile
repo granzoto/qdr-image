@@ -5,6 +5,7 @@ WORKDIR /opt/jms-amqp-tests
 COPY pom.xml ./
 COPY src ./src/
 
-RUN mvn clean package -DskipTests=true && mkdir /report
+RUN mvn -fn clean package && mkdir /report && \
+    mv /root/.m2 /.m2 && chmod 777 -R /opt/jms-amqp-tests /.m2
 
 ENTRYPOINT ["mvn", "test"]

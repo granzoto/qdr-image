@@ -9,6 +9,10 @@
 # against a Kubernetes cluster.
 #
 
+# general variables
+QPID_DISPATCH_IMAGE="quay.io/interconnectedcloud/qdrouterd:latest"
+ACTIVEMQ_ARTEMIS_IMAGE="quay.io/artemiscloud/activemq-artemis-broker:latest"
+
 # clients/java/jms-amqp-tests
 QPID_JMS_TRANSACTION_ROUTER_URL="amqp://127.0.0.1:5672"
 QPID_JMS_TRANSACTION_ADDRESS="trx.testQueue"
