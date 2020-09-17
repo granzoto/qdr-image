@@ -19,6 +19,7 @@
 
 # Test
 
+/**/*.iml
 /**/.idea/
 /**/target/
 /**/result/
