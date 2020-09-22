@@ -2,11 +2,13 @@ package utils
 
 // StrDefault helper function that returns value if not empty
 // otherwise returns dflt.
-func StrDefault(value, dflt string) string {
-	if len(value) == 0 {
-		return dflt
+func StrDefault(dflt string, values ...string) string {
+	for _, value := range values {
+		if len(value) > 0 {
+			return value
+		}
 	}
-	return value
+	return dflt
 }
 
 // StrEmpty returns true if the given string is empty

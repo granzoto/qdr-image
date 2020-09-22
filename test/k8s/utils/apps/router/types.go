@@ -1,4 +1,4 @@
-package qpid_dispatch
+package router
 
 // QdpidDispatch representation
 type QpidDispatch struct {

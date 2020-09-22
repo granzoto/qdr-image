@@ -1,7 +1,8 @@
-package qpid_dispatch
+package router
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/interconnectedcloud/qdr-image/test/k8s/utils"
 	"github.com/interconnectedcloud/qdr-image/test/k8s/utils/constants"
@@ -30,8 +31,8 @@ func NewDeployment(namespace string, qpidDispatch QpidDispatch, opts QpidDispatc
 		return nil, err
 	}
 
-	// Default values
-	image := utils.StrDefault(opts.Image, constants.QpidDispatchImage)
+	// Default values - use constant by default or image from opts or from env if any provided
+	image := utils.StrDefault(constants.QpidDispatchImage, opts.Image, os.Getenv("QPID_DISPATCH_IMAGE"))
 
 	// Static definitions for ActiveMQ Artemis Deployment
 	replicas := int32(1)
@@ -59,10 +60,10 @@ func NewDeployment(namespace string, qpidDispatch QpidDispatch, opts QpidDispatc
 					Containers: []core.Container{
 						{Name: qpidDispatch.Id, Image: image, ImagePullPolicy: pullPolicy,
 							Env: []core.EnvVar{
-								{Name: "QDROUTERD_CONF", Value: "/opt/qpid-dispatch/qdrouterd.conf"},
+								{Name: "QDROUTERD_CONF", Value: "/opt/router/qdrouterd.conf"},
 							},
 							VolumeMounts: []core.VolumeMount{
-								{Name: "router-config", MountPath: "/opt/qpid-dispatch", ReadOnly: true},
+								{Name: "router-config", MountPath: "/opt/router", ReadOnly: true},
 							}},
 					},
 					Volumes: []core.Volume{

@@ -1,4 +1,4 @@
-package qpid_dispatch
+package router
 
 import (
 	"bytes"
@@ -68,15 +68,6 @@ listener {
     {{- end}}
 }
 {{- end}}
-listener {
-    name: health-and-stats
-    port: {{.DeploymentPlan.LivenessPort}}
-    http: true
-    healthz: true
-    metrics: true
-    websockets: false
-    httpRootDir: invalid
-}
 {{range .InterRouterListeners}}
 listener {
     {{- if .Name}}
@@ -143,16 +134,16 @@ listener {
 sslProfile {
    name: {{.Name}}
    {{- if .Credentials}}
-   certFile: /etc/qpid-dispatch-certs/{{.Name}}/{{.Credentials}}/tls.crt
-   privateKeyFile: /etc/qpid-dispatch-certs/{{.Name}}/{{.Credentials}}/tls.key
+   certFile: /etc/router-certs/{{.Name}}/{{.Credentials}}/tls.crt
+   privateKeyFile: /etc/router-certs/{{.Name}}/{{.Credentials}}/tls.key
    {{- end}}
    {{- if .CaCert}}
        {{- if eq .CaCert .Credentials}}
-   caCertFile: /etc/qpid-dispatch-certs/{{.Name}}/{{.CaCert}}/ca.crt
+   caCertFile: /etc/router-certs/{{.Name}}/{{.CaCert}}/ca.crt
        {{- else if and .GenerateCredentials .MutualAuth}}
-   caCertFile: /etc/qpid-dispatch-certs/{{.Name}}/{{.Credentials}}/ca.crt
+   caCertFile: /etc/router-certs/{{.Name}}/{{.Credentials}}/ca.crt
        {{- else}}
-   caCertFile: /etc/qpid-dispatch-certs/{{.Name}}/{{.CaCert}}/tls.crt
+   caCertFile: /etc/router-certs/{{.Name}}/{{.CaCert}}/tls.crt
        {{- end}}
    {{- end}}
 }

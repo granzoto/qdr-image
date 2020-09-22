@@ -1,7 +1,8 @@
-package activemq_artemis
+package broker
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/interconnectedcloud/qdr-image/test/k8s/utils"
@@ -36,9 +37,9 @@ func NewDeployment(namespace string, opts ActiveMQArtemisDeploymentOpts) (*v1.De
 	}
 
 	// Default values
-	image := utils.StrDefault(opts.Image, constants.ActiveMQArtemisImage)
-	user := utils.StrDefault(opts.User, "admin")
-	pass := utils.StrDefault(opts.Pass, "admin")
+	image := utils.StrDefault(constants.ActiveMQArtemisImage, opts.Image, os.Getenv("ACTIVEMQ_ARTEMIS_IMAGE"))
+	user := utils.StrDefault("admin", opts.User)
+	pass := utils.StrDefault("admin", opts.Pass)
 
 	// Static definitions for ActiveMQ Artemis Deployment
 	replicas := int32(1)
