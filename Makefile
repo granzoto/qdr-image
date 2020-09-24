@@ -3,11 +3,13 @@ DOCKER_REGISTRY=quay.io
 DOCKER_ORG=interconnectedcloud
 PWD=$(shell pwd)
 
- # This is the latest version of the Qpid Dispatch Router
+# This is the latest version of the Qpid Dispatch Router
 DISPATCH_VERSION=1.13.0
 PROTON_VERSION=0.32.0
 PROTON_SOURCE_URL=http://archive.apache.org/dist/qpid/proton/${PROTON_VERSION}/qpid-proton-${PROTON_VERSION}.tar.gz
 ROUTER_SOURCE_URL=http://archive.apache.org/dist/qpid/dispatch/${DISPATCH_VERSION}/qpid-dispatch-${DISPATCH_VERSION}.tar.gz
+
+ATOMICDIRS=$(shell find ./test/container-images/ -name Makefile | xargs dirname)
 
 # If a DOCKER_TAG is specified, go ahead and use it.
 # if DOCKER_TAG is not specified use the DISPATCH_VERSION as the DOCKER_TAG
@@ -32,6 +34,15 @@ cleanimage:
 buildimage:
 	docker build -t ${PROJECT_NAME}:latest .
 	docker tag ${PROJECT_NAME}:latest ${DOCKER_REGISTRY}/${DOCKER_ORG}/${PROJECT_NAME}:${DOCKER_TAG_VAL}
+
+testimages:
+	@echo Building atomic test images
+	@echo
+	$(foreach DIR,$(ATOMICDIRS), \
+		@echo Building $(DIR) && echo && \
+		cd $(DIR) && make && \
+		echo \
+	)
 
 push: buildimage
 # DOCKER_USER and DOCKER_PASSWORD is useful in the CI environment.

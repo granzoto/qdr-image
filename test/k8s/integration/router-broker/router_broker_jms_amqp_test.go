@@ -14,9 +14,11 @@ import (
 	"testing"
 )
 
-func TestTransaction(t *testing.T) {
+const testImage = "docker.io/fgiorgetti/jms-amqp-tests:1.0"
+
+func TestJmsAmqp(t *testing.T) {
 	clusterNeeds := base.ClusterNeeds{
-		NamespaceId:     "router-broker-trx",
+		NamespaceId:     "jms-amqp",
 		PublicClusters:  1,
 		PrivateClusters: 0,
 	}
@@ -33,7 +35,7 @@ func TestTransaction(t *testing.T) {
 
 	// Preparing the jms-amqp-tests job
 	jmsAmqpTests := k8s.NewJob("jms-amqp-tests", ctx.Namespace, k8s.JobOpts{
-		Image:        "docker.io/fgiorgetti/jms-amqp-tests",
+		Image:        testImage,
 		BackoffLimit: 1,
 		Restart:      v1.RestartPolicyNever,
 		Env: map[string]string{
