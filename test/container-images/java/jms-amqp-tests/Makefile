@@ -1,4 +1,4 @@
-TAG=1.0
+TAG=1.1
 IMAGE=docker.io/fgiorgetti/jms-amqp-tests
 
 all: build-image push-image

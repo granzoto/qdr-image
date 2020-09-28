@@ -14,7 +14,7 @@ import (
 	"testing"
 )
 
-const testImage = "docker.io/fgiorgetti/jms-amqp-tests:1.0"
+const testImage = "docker.io/fgiorgetti/jms-amqp-tests:1.1"
 
 func TestJmsAmqp(t *testing.T) {
 	clusterNeeds := base.ClusterNeeds{
